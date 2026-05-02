@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본어연습1 — 1~4과 문법·조사 정리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Noto+Sans+KR:wght@300;400;700;900&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A3550;
+    --teal: #28B4A6;
+    --orange: #E67E22;
+    --red: #E74C3C;
+    --gold: #C49A10;
+    --white: #ffffff;
+    --paper: #faf6ee;
+    --light: #eee8d8;
+    --muted: #8a7e6f;
+    --ink: #2a1a08;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Noto Sans JP', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ── 헤더 ── */
+  header {
+    background: var(--navy);
+    padding: 28px 20px 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    transition: padding 0.2s;
+  }
+  header.compact { padding: 10px 20px; }
+  header h1 {
+    font-size: clamp(18px, 4vw, 28px);
+    font-weight: 900;
+    color: var(--white);
+    font-family: 'Shippori Mincho', serif;
+    letter-spacing: 2px;
+    transition: font-size 0.2s;
+  }
+  header.compact h1 { font-size: clamp(14px, 3vw, 18px); }
+  header .sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 5px;
+    letter-spacing: 2px;
+    transition: opacity 0.2s, max-height 0.2s;
+    max-height: 40px;
+    overflow: hidden;
+  }
+  header.compact .sub { opacity: 0; max-height: 0; margin-top: 0; }
+
+  /* ── 목차 탭 ── */
+  .toc {
+    background: var(--navy);
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 12px 12px;
+    flex-wrap: wrap;
+  }
+  .toc a {
+    padding: 6px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    white-space: nowrap;
+  }
+  .toc a:hover, .toc a:active { background: rgba(255,255,255,0.1); color: var(--white); }
+  .toc a.teal { color: var(--teal); border-color: rgba(40,180,166,0.3); }
+  .toc a.orange { color: var(--orange); border-color: rgba(230,126,34,0.3); }
+
+  /* ── 메인 컨테이너 ── */
+  .container { max-width: 800px; margin: 0 auto; padding: 32px 16px 80px; }
+
+  /* ── 섹션 헤더 ── */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 44px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light);
+  }
+  .section-head:first-child { margin-top: 0; }
+  .section-num {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; color: white; flex-shrink: 0;
+  }
+  .section-num.teal { background: var(--teal); }
+  .section-num.orange { background: var(--orange); }
+  .section-num.navy { background: var(--navy); }
+  .section-num.red { background: var(--red); }
+  .section-head h2 { font-size: clamp(16px, 3vw, 22px); font-weight: 900; color: var(--navy); }
+  .new-badge {
+    font-size: 10px; font-weight: 900;
+    background: var(--red); color: white;
+    padding: 2px 8px; border-radius: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* ── 조사 그리드 ── */
+  .particle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .pcard {
+    background: white;
+    border: 1px solid var(--light);
+    border-radius: 14px;
+    padding: 14px 12px;
+    display: flex; flex-direction: column; gap: 5px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .pcard.new { border-color: rgba(231,76,60,0.4); background: #fff8f8; }
+  .pcard .pj { font-family: 'Noto Sans JP', sans-serif; font-size: 26px; font-weight: 900; color: var(--navy); }
+  .pcard .pk { font-size: 12px; color: var(--muted); font-weight: 700; }
+  .pcard .pe { font-family: 'Noto Sans JP', sans-serif; font-size: 12px; color: #888; line-height: 1.7; border-top: 1px solid #f0f0f0; padding-top: 7px; margin-top: 3px; }
+  .pcard .pe ruby rt { font-size: 0.7em; color: #aaa; }
+  .pcard .pnew { font-size: 10px; background: var(--red); color: white; padding: 1px 7px; border-radius: 10px; font-weight: 700; align-self: flex-start; }
+
+  /* ── こそあど 표 ── */
+  .ksa-wrap { overflow-x: auto; margin-bottom: 8px; -webkit-overflow-scrolling: touch; }
+  .ksa-table {
+    width: 100%; min-width: 340px; border-collapse: collapse;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .ksa-table th {
+    padding: 10px 12px;
+    font-size: 15px; font-weight: 900;
+    text-align: center; color: white;
+  }
+  .ksa-table th.rh { font-size: 11px; color: var(--muted); background: #f8f8f8; text-align: left; font-family: 'Noto Sans KR', sans-serif; font-weight: 400; }
+  .ksa-table th.ko { background: rgba(40,180,166,0.8); }
+  .ksa-table th.so { background: rgba(230,126,34,0.8); }
+  .ksa-table th.a  { background: rgba(155,89,182,0.8); }
+  .ksa-table th.do { background: rgba(231,76,60,0.8); }
+  .ksa-table td { padding: 10px 12px; font-size: 17px; font-weight: 900; text-align: center; border-top: 1px solid #f0f0f0; }
+  .ksa-table td.rh { font-size: 11px; color: var(--muted); font-family: 'Noto Sans KR', sans-serif; font-weight: 400; text-align: left; background: #fafafa; }
+  .ksa-table .ko { color: #1a8a80; }
+  .ksa-table .so { color: #b85e10; }
+  .ksa-table .a  { color: #7b4494; }
+  .ksa-table .do { color: #c0392b; }
+  .ksa-table tr.new-row td { background: #fff8f8; }
+  .ksa-new { font-size: 10px; background: var(--red); color: white; padding: 1px 6px; border-radius: 8px; vertical-align: middle; margin-left: 4px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; }
+
+  /* ── 문법 카드 ── */
+  .gcard {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    margin-bottom: 14px;
+    border: 1px solid var(--light);
+  }
+  .gcard-head {
+    padding: 14px 18px 11px;
+    border-left: 5px solid var(--teal);
+  }
+  .gcard-head.orange { border-left-color: var(--orange); }
+  .gcard-head.red { border-left-color: var(--red); }
+  .gcard-head.navy { border-left-color: var(--navy); }
+  .gcard-head.gold { border-left-color: var(--gold); }
+
+  .g-tag { font-size: 10px; font-weight: 900; letter-spacing: 2px; color: #bbb; margin-bottom: 3px; }
+  .g-formula {
+    font-size: clamp(15px, 3vw, 19px);
+    font-weight: 900;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--navy);
+    line-height: 1.6;
+    margin-bottom: 5px;
+  }
+  .g-formula .hl { color: var(--teal); }
+  .g-formula .hl-o { color: var(--orange); }
+  .g-formula .hl-r { color: var(--red); }
+  .g-point { font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .g-point b { color: var(--ink); }
+
+  .gcard-body {
+    padding: 11px 18px 14px;
+    background: #fafbfc;
+    border-top: 1px solid #f0f0f0;
+  }
+  .g-ex {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(13px, 2.5vw, 15px);
+    color: #444;
+    line-height: 2.1;
+  }
+  .g-ex ruby rt { font-size: 0.65em; color: #aaa; }
+  .g-ex .hl { color: var(--teal); font-weight: 700; }
+  .g-ex .hl-o { color: var(--orange); font-weight: 700; }
+  .g-ex .hl-r { color: var(--red); font-weight: 700; }
+  .g-kr { font-size: 12px; color: #999; font-family: 'Noto Sans KR', sans-serif; }
+
+  .warn-box {
+    background: #fff8f8;
+    border: 1px solid rgba(231,76,60,0.2);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 12px;
+    color: #c0392b;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.8;
+    margin-top: 10px;
+  }
+  .warn-box ruby rt { font-size: 0.65em; color: rgba(192,57,43,0.6); }
+
+  /* 위치명사 그리드 */
+  .pos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 8px;
+  }
+  .pos-card {
+    background: white;
+    border: 1px solid var(--light);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .pos-jp { font-family: 'Noto Sans JP', sans-serif; font-size: 19px; font-weight: 900; color: var(--navy); }
+  .pos-jp ruby rt { font-size: 0.6em; color: #bbb; }
+  .pos-kr { font-size: 12px; color: var(--muted); }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: #ccc;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 480px) {
+    .particle-grid { grid-template-columns: repeat(2, 1fr); }
+    .pos-grid { grid-template-columns: repeat(3, 1fr); }
+    .toc a { font-size: 11px; padding: 5px 10px; }
+    .container { padding: 24px 12px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<header id="main-header">
+  <h1>日本語練習１　문법 정리</h1>
+  <div class="sub">1〜4과　스크롤해서 확인하세요　　🔴 = 4과 신규</div>
+</header>
+
+<div class="toc">
+  <a href="#particles">조사</a>
+  <a href="#kosoad">こそあど</a>
+  <a href="#s1" class="teal">1과</a>
+  <a href="#s2" class="teal">2과</a>
+  <a href="#s3" class="teal">3과</a>
+  <a href="#s4" class="orange">4과 🔴</a>
+  <a href="#pos" class="orange">위치명사 🔴</a>
+</div>
+
+<div class="container">
+
+  <!-- ① 조사 -->
+  <div class="section-head" id="particles">
+    <div class="section-num teal">①</div>
+    <h2>조사 정리</h2>
+  </div>
+
+  <div class="particle-grid">
+    <div class="pcard">
+      <span class="pj">は</span>
+      <span class="pk">~은/는 (주제)</span>
+      <span class="pe"><ruby>山田<rt>やまだ</rt></ruby>さん<b>は</b><ruby>学生<rt>がくせい</rt></ruby>です。</span>
+    </div>
+    <div class="pcard">
+      <span class="pj">も</span>
+      <span class="pk">~도 (첨가)</span>
+      <span class="pe">わたし<b>も</b><ruby>学生<rt>がくせい</rt></ruby>です。</span>
+    </div>
+    <div class="pcard">
+      <span class="pj">の</span>
+      <span class="pk">~의 (소유·속성)</span>
+      <span class="pe"><ruby>英語<rt>えいご</rt></ruby><b>の</b><ruby>辞書<rt>じしょ</rt></ruby></span>
+    </div>
+    <div class="pcard">
+      <span class="pj">が</span>
+      <span class="pk">~이/가 / 역접</span>
+      <span class="pe">このかた<b>が</b><ruby>会長<rt>かいちょう</rt></ruby>です。</span>
+    </div>
+    <div class="pcard">
+      <span class="pj">か</span>
+      <span class="pk">~입니까? (의문)</span>
+      <span class="pe"><ruby>学生<rt>がくせい</rt></ruby>です<b>か</b>。</span>
+    </div>
+    <div class="pcard">
+      <span class="pj">ね</span>
+      <span class="pk">~이군요 (확인)</span>
+      <span class="pe">そうです<b>ね</b>。</span>
+    </div>
+    <div class="pcard">
+      <span class="pj">で</span>
+      <span class="pk">~이고 (중지법)</span>
+      <span class="pe"><ruby>一人<rt>ひとり</rt></ruby>は<ruby>学生<rt>がくせい</rt></ruby><b>で</b>、<ruby>一人<rt>ひとり</rt></ruby>は<ruby>研究員<rt>けんきゅういん</rt></ruby>です。</span>
+    </div>
+    <div class="pcard">
+      <span class="pj">から/まで</span>
+      <span class="pk">~부터 / ~까지</span>
+      <span class="pe">ソウル<b>から</b><ruby>東京<rt>とうきょう</rt></ruby><b>まで</b></span>
+    </div>
+    <div class="pcard new">
+      <span class="pnew">NEW 4과</span>
+      <span class="pj">に</span>
+      <span class="pk">~에 (존재 장소)</span>
+      <span class="pe"><ruby>図書館<rt>としょかん</rt></ruby>の<ruby>中<rt>なか</rt></ruby><b>に</b>あります。</span>
+    </div>
+    <div class="pcard new">
+      <span class="pnew">NEW 4과</span>
+      <span class="pj">や</span>
+      <span class="pk">~이랑 (나열)</span>
+      <span class="pe"><ruby>郵便局<rt>ゆうびんきょく</rt></ruby><b>や</b><ruby>銀行<rt>ぎんこう</rt></ruby>などがあります。</span>
+    </div>
+  </div>
+
+  <!-- ② こそあど -->
+  <div class="section-head" id="kosoad">
+    <div class="section-num orange">②</div>
+    <h2>こそあど 계열</h2>
+  </div>
+
+  <div class="ksa-wrap">
+    <table class="ksa-table">
+      <tr>
+        <th class="rh"></th>
+        <th class="ko">こ (이)</th>
+        <th class="so">そ (그)</th>
+        <th class="a">あ (저)</th>
+        <th class="do">ど (어)</th>
+      </tr>
+      <tr>
+        <td class="rh">사물</td>
+        <td class="ko">これ</td><td class="so">それ</td><td class="a">あれ</td><td class="do">どれ</td>
+      </tr>
+      <tr>
+        <td class="rh">연체사 (+명사)</td>
+        <td class="ko">この</td><td class="so">その</td><td class="a">あの</td><td class="do">どの</td>
+      </tr>
+      <tr>
+        <td class="rh">방향·사람 (정중)</td>
+        <td class="ko">こちら</td><td class="so">そちら</td><td class="a">あちら</td><td class="do">どちら</td>
+      </tr>
+      <tr class="new-row">
+        <td class="rh">장소 <span class="ksa-new">NEW 4과</span></td>
+        <td class="ko">ここ</td><td class="so">そこ</td><td class="a">あそこ</td><td class="do">どこ</td>
+      </tr>
+    </table>
+  </div>
+
+  <div style="margin: 12px 0 0; padding: 12px 14px; background: white; border-radius: 12px; border: 1px solid var(--light); font-size: 12px; color: var(--muted); font-family: 'Noto Sans JP', sans-serif;">
+    ※ <b style="color:var(--navy)">これ</b>は〜です（단독 주어）　／　<b style="color:var(--navy)">この</b>+名詞（뒤에 명사）　／　<b style="color:var(--navy)">ここ</b>に〜があります（장소）
+  </div>
+
+  <!-- ③ 1과 문법 -->
+  <div class="section-head" id="s1">
+    <div class="section-num teal">③</div>
+    <h2>1과 문법</h2>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head">
+      <div class="g-tag">1과 핵심</div>
+      <div class="g-formula">명사 <span class="hl">は</span> 명사 <span class="hl">です</span> / <span class="hl">ではありません</span></div>
+      <div class="g-point">~은/는 ~입니다 / ~이/가 아닙니다. 회화체에서는 <b>じゃありません</b>도 씁니다.</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        パク<span class="hl">は</span><ruby>韓国<rt>かんこく</rt></ruby>の<ruby>留学生<rt>りゅうがくせい</rt></ruby><span class="hl">です</span>。<span class="g-kr"> 박씨는 한국 유학생입니다.</span><br>
+        <ruby>山田<rt>やまだ</rt></ruby>さん<span class="hl">は</span><ruby>学生<rt>がくせい</rt></ruby><span class="hl">ではありません</span>。<span class="g-kr"> 야마다씨는 학생이 아닙니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head navy">
+      <div class="g-tag">1과</div>
+      <div class="g-formula">명사 <span class="hl">も</span> 명사 です</div>
+      <div class="g-point">「も」는 「は」 대신 씁니다. （×わたし<b>はも</b>）</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <ruby>山田<rt>やまだ</rt></ruby>さん<span class="hl">も</span><ruby>学生<rt>がくせい</rt></ruby>ですか。<span class="g-kr"> 야마다씨도 학생입니까?</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 2과 문법 -->
+  <div class="section-head" id="s2">
+    <div class="section-num teal">④</div>
+    <h2>2과 문법</h2>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head">
+      <div class="g-tag">2과 핵심</div>
+      <div class="g-formula"><span class="hl">この/その/あの</span> + 명사 は ～ です</div>
+      <div class="g-point">연체사. 반드시 뒤에 명사가 옵니다.</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <span class="hl">この</span><ruby>本<rt>ほん</rt></ruby>は<ruby>英語<rt>えいご</rt></ruby>の<ruby>辞書<rt>じしょ</rt></ruby>です。<span class="g-kr"> 이 책은 영어 사전입니다.</span><br>
+        あのかたは<ruby>どなた</ruby>ですか。<span class="g-kr"> 저 분은 누구십니까?</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head navy">
+      <div class="g-tag">2과</div>
+      <div class="g-formula">명사 <span class="hl">で</span>、명사 です　（명사 중지법）</div>
+      <div class="g-point">「です」→「で」로 바꿔서 두 문장 연결. 한국어 「~이고」.</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <ruby>一人<rt>ひとり</rt></ruby>は<ruby>学生<rt>がくせい</rt></ruby><span class="hl">で</span>、<ruby>一人<rt>ひとり</rt></ruby>は<ruby>研究員<rt>けんきゅういん</rt></ruby>です。<span class="g-kr"> 한 명은 학생이고, 한 명은 연구원입니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 3과 문법 -->
+  <div class="section-head" id="s3">
+    <div class="section-num teal">⑤</div>
+    <h2>3과 문법</h2>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head">
+      <div class="g-tag">3과 핵심</div>
+      <div class="g-formula"><span class="hl">これ/それ/あれ</span> は ～ です</div>
+      <div class="g-point">사물 지시대명사. 단독으로 주어로 씁니다.</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <span class="hl">これ</span>は<ruby>英語<rt>えいご</rt></ruby>の<ruby>辞書<rt>じしょ</rt></ruby>です。<span class="g-kr"> 이것은 영어 사전입니다.</span><br>
+        <ruby>英語<rt>えいご</rt></ruby>の<ruby>辞書<rt>じしょ</rt></ruby>は<span class="hl">どれ</span>ですか。<span class="g-kr"> 영어 사전은 어느 것입니까?</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head orange">
+      <div class="g-tag">3과</div>
+      <div class="g-formula">문장1 <span class="hl-o">が</span>、문장2　（역접）</div>
+      <div class="g-point">두 문장을 대비·역접으로 연결합니다. 주격 「이/가」로도 씁니다.</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <ruby>一冊<rt>いっさつ</rt></ruby>は<ruby>小説<rt>しょうせつ</rt></ruby>です<span class="hl-o">が</span>、もう<ruby>一冊<rt>いっさつ</rt></ruby>は<ruby>雑誌<rt>ざっし</rt></ruby>です。<span class="g-kr"> 한 권은 소설이지만, 또 한 권은 잡지입니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head navy">
+      <div class="g-tag">3과</div>
+      <div class="g-formula">조수사　<span class="hl">〜冊（さつ）・〜階（かい）・〜番（ばん）</span></div>
+      <div class="g-point">책 세는 단위(冊), 층(階), 번호(番).</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <ruby>一冊<rt>いっさつ</rt></ruby>・<ruby>二冊<rt>にさつ</rt></ruby>　　<ruby>一階<rt>いっかい</rt></ruby>・<ruby>二階<rt>にかい</rt></ruby>　　<ruby>一番<rt>いちばん</rt></ruby>・<ruby>二番<rt>にばん</rt></ruby>・<ruby>三番<rt>さんばん</rt></ruby>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 4과 문법 -->
+  <div class="section-head" id="s4">
+    <div class="section-num red">⑥</div>
+    <h2>4과 문법 <span class="new-badge">NEW</span></h2>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head red">
+      <div class="g-tag">4과 핵심 ①</div>
+      <div class="g-formula">장소 <span class="hl-r">に</span> ～ が <span class="hl-r">あります</span>　사물·식물</div>
+      <div class="g-formula">장소 <span class="hl-r">に</span> ～ が <span class="hl-r">います</span>　사람·동물</div>
+      <div class="g-point"><b>あります</b> = 스스로 움직이지 않는 것　／　<b>います</b> = 사람·동물</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <ruby>学校<rt>がっこう</rt></ruby>の<ruby>中<rt>なか</rt></ruby><span class="hl-r">に</span><ruby>図書館<rt>としょかん</rt></ruby>が<span class="hl-r">あります</span>。<span class="g-kr"> 학교 안에 도서관이 있습니다.</span><br>
+        <ruby>学校<rt>がっこう</rt></ruby>の<ruby>中<rt>なか</rt></ruby><span class="hl-r">に</span><ruby>山田<rt>やまだ</rt></ruby>さんが<span class="hl-r">います</span>。<span class="g-kr"> 학교 안에 야마다씨가 있습니다.</span><br>
+        <ruby>近<rt>ちか</rt></ruby>くにタクシー<ruby>乗<rt>の</rt></ruby>り<ruby>場<rt>ば</rt></ruby>は<span class="hl-r">ありません</span>。<span class="g-kr"> 근처에 택시 승강장은 없습니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head red">
+      <div class="g-tag">4과 핵심 ②</div>
+      <div class="g-formula">명사1 <span class="hl-r">や</span> 명사2 <span class="hl-r">など</span> が あります</div>
+      <div class="g-point"><b>や</b> = 대표적인 것만 나열 (전부가 아님). 보통 「など」와 함께 씁니다.</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <ruby>郵便局<rt>ゆうびんきょく</rt></ruby><span class="hl-r">や</span><ruby>銀行<rt>ぎんこう</rt></ruby>、それから<ruby>食堂<rt>しょくどう</rt></ruby>などがあります。<span class="g-kr"> 우체국이랑 은행, 그리고 식당 등이 있습니다.</span>
+      </div>
+      <div class="warn-box">
+        ⚠ <ruby>郵便局<rt>ゆうびんきょく</rt></ruby><b>と</b><ruby>銀行<rt>ぎんこう</rt></ruby>があります。= 딱 그것들만 (전부 나열)<br>
+        　<ruby>郵便局<rt>ゆうびんきょく</rt></ruby><b>や</b><ruby>銀行<rt>ぎんこう</rt></ruby>などがあります。= 그 외에도 더 있음
+      </div>
+    </div>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head orange">
+      <div class="g-tag">4과</div>
+      <div class="g-formula">それから　／　ほかに</div>
+      <div class="g-point">それから = 그리고, 그런 다음　／　ほかに = 그 밖에, 다른 데</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        <ruby>郵便局<rt>ゆうびんきょく</rt></ruby>や<ruby>銀行<rt>ぎんこう</rt></ruby>、<span class="hl-o">それから</span><ruby>食堂<rt>しょくどう</rt></ruby>などがあります。<br>
+        <ruby>食堂<rt>しょくどう</rt></ruby>は<span class="hl-o">ほかに</span>ありませんか。<span class="g-kr"> 식당은 다른 데 없습니까?</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 위치명사 -->
+  <div class="section-head" id="pos">
+    <div class="section-num red">⑦</div>
+    <h2>위치명사 <span class="new-badge">NEW 4과</span></h2>
+  </div>
+
+  <div class="pos-grid" style="margin-bottom:14px;">
+    <div class="pos-card"><div class="pos-jp"><ruby>前<rt>まえ</rt></ruby></div><div class="pos-kr">앞</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>後<rt>うし</rt></ruby>ろ</div><div class="pos-kr">뒤</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>上<rt>うえ</rt></ruby></div><div class="pos-kr">위</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>下<rt>した</rt></ruby></div><div class="pos-kr">아래</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>中<rt>なか</rt></ruby></div><div class="pos-kr">안</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>右<rt>みぎ</rt></ruby></div><div class="pos-kr">오른쪽</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>左<rt>ひだり</rt></ruby></div><div class="pos-kr">왼쪽</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>外<rt>そと</rt></ruby></div><div class="pos-kr">밖</div></div>
+    <div class="pos-card"><div class="pos-jp">そば</div><div class="pos-kr">옆, 근처</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>隣<rt>となり</rt></ruby></div><div class="pos-kr">옆 (바로 옆)</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>横<rt>よこ</rt></ruby></div><div class="pos-kr">옆면, 가로</div></div>
+    <div class="pos-card"><div class="pos-jp"><ruby>近<rt>ちか</rt></ruby>く</div><div class="pos-kr">근처</div></div>
+  </div>
+
+  <div class="gcard">
+    <div class="gcard-head red">
+      <div class="g-tag">위치명사 용법</div>
+      <div class="g-formula">장소 <span class="hl-r">の</span> <span class="hl-o">위치명사</span> <span class="hl-r">に</span> あります／います</div>
+    </div>
+    <div class="gcard-body">
+      <div class="g-ex">
+        つくえの<span class="hl-o"><ruby>上<rt>うえ</rt></ruby></span>にノートやボールペンなどがあります。<span class="g-kr"> 책상 위에 노트랑 볼펜 등이 있습니다.</span><br>
+        <ruby>建物<rt>たてもの</rt></ruby>の<span class="hl-o"><ruby>後<rt>うし</rt></ruby>ろ</span>に<ruby>区役所<rt>くやくしょ</rt></ruby>があります。<span class="g-kr"> 건물 뒤에 구청이 있습니다.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>日本語練習１　inhajpn1</footer>
+
+<script>
+  const header = document.getElementById('main-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('compact', window.scrollY > 50);
+  }, { passive: true });
+</script>
+
+</body>
+</html>
