@@ -117,7 +117,7 @@
   /* ── 조사 그리드 ── */
   .particle-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     margin-bottom: 8px;
   }
@@ -255,7 +255,6 @@
   }
 
   @media (max-width: 480px) {
-    .particle-grid { grid-template-columns: repeat(2, 1fr); }
     .pos-grid { grid-template-columns: repeat(3, 1fr); }
     .toc a { font-size: 11px; padding: 5px 10px; }
     .container { padding: 24px 12px 80px; }
