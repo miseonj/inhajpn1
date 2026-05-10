@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5과 문형·문법</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap');
+  :root {
+    --bg: #f8f6f1; --surface: #ffffff; --border: #e0dbd0;
+    --accent: #2d5a3d; --accent2: #c9a84c;
+    --text: #1a1a1a; --muted: #888;
+    --tag-bg: #e8f0ea; --tag-color: #2d5a3d;
+    --example-bg: #f8f6f1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; padding: 0 0 80px; line-height: 1.7; }
+  .hero { background: var(--accent); color: #fff; padding: 40px 24px 32px; text-align: center; }
+  .hero .label { font-size: 0.75rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+  .hero h1 { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .hero .sub { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+  .toc { max-width: 640px; margin: 24px auto 0; padding: 0 16px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .toc-item { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 0.78rem; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+  .toc-item:hover { background: rgba(255,255,255,0.25); }
+  .content { max-width: 640px; margin: 0 auto; padding: 32px 16px 0; display: flex; flex-direction: column; gap: 20px; }
+  .card { background: var(--surface); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+  .card-header { padding: 16px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .card-num { font-size: 0.7rem; font-weight: 700; color: var(--accent); background: var(--tag-bg); padding: 2px 8px; border-radius: 10px; letter-spacing: 0.05em; flex-shrink: 0; }
+  .card-title { font-family: 'Noto Serif JP', serif; font-size: 1.25rem; font-weight: 700; color: var(--text); letter-spacing: 0.05em; }
+  .card-ko { font-size: 0.82rem; color: var(--muted); margin-left: auto; flex-shrink: 0; font-weight: 400; }
+  .card-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 16px; }
+  .usage { display: flex; flex-direction: column; gap: 6px; }
+  .usage-title { font-size: 0.75rem; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; display: flex; align-items: center; gap: 6px; }
+  .usage-title::before { content: ''; display: inline-block; width: 3px; height: 12px; background: var(--accent); border-radius: 2px; }
+  .pattern { font-family: 'Noto Serif JP', serif; font-size: 0.95rem; color: #333; background: var(--example-bg); padding: 8px 14px; border-radius: 6px; border-left: 3px solid var(--accent2); }
+  .examples { display: flex; flex-direction: column; gap: 8px; }
+  .example { padding: 10px 14px; background: var(--example-bg); border-radius: 8px; border-left: 3px solid var(--border); }
+  .example .jp { font-family: 'Noto Serif JP', serif; font-size: 1rem; color: var(--text); margin-bottom: 2px; }
+  .example .ko { font-size: 0.82rem; color: var(--muted); }
+  .note { font-size: 0.8rem; color: #666; background: #fffbf0; border: 1px solid #f0e4b0; border-radius: 6px; padding: 8px 12px; }
+  .note::before { content: '💡 '; }
+  .culture { font-size: 0.8rem; color: #444; background: #f0f4ff; border: 1px solid #c8d4f0; border-radius: 6px; padding: 8px 12px; }
+  .culture::before { content: '🗾 '; }
+  .divider { height: 1px; background: var(--border); margin: 4px 0; }
+  footer { text-align: center; margin-top: 48px; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">문 형 · 문 법　文型と文法</div>
+  <h1>第５課</h1>
+  <div class="sub">어디에서 왔습니까?</div>
+  <div class="toc">
+    <a class="toc-item" href="#g1">(1) 〜で</a>
+    <a class="toc-item" href="#g2">(2) 〜での</a>
+    <a class="toc-item" href="#g3">(3) 〜目</a>
+    <a class="toc-item" href="#g4">(4) どうですか</a>
+    <a class="toc-item" href="#g5">(5) 〜よ</a>
+    <a class="toc-item" href="#g6">(6) 〜よね</a>
+    <a class="toc-item" href="#g7">(7) 〜だったんです</a>
+    <a class="toc-item" href="#g8">(8) 〜ですけど</a>
+    <a class="toc-item" href="#g9">(9) 〜のほう</a>
+    <a class="toc-item" href="#g10">(10) 数量+も</a>
+    <a class="toc-item" href="#g11">(11) 안부 표현</a>
+    <a class="toc-item" href="#g12">(12) ここ+시간</a>
+    <a class="toc-item" href="#g13">(13) どうも</a>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- (1) で -->
+  <div class="card" id="g1">
+    <div class="card-header">
+      <span class="card-num">(1)</span>
+      <span class="card-title">〜で</span>
+      <span class="card-ko">조사 で의 용법</span>
+    </div>
+    <div class="card-body">
+      <div class="usage">
+        <div class="usage-title">① 동작의 장소 (~에서)</div>
+        <div class="examples">
+          <div class="example"><div class="jp">デパートで買い物をします。</div><div class="ko">백화점에서 쇼핑을 합니다.</div></div>
+          <div class="example"><div class="jp">図書館で勉強します。</div><div class="ko">도서관에서 공부합니다.</div></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="usage">
+        <div class="usage-title">② 수단·방법 (~으로)</div>
+        <div class="examples">
+          <div class="example"><div class="jp">学校まではバスで行きます。</div><div class="ko">학교까지는 버스로 갑니다.</div></div>
+          <div class="example"><div class="jp">ソウルまでは飛行機で行きます。</div><div class="ko">서울까지는 비행기로 갑니다.</div></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="usage">
+        <div class="usage-title">③ 합계·한도 (~으로)</div>
+        <div class="examples">
+          <div class="example"><div class="jp">この本は三冊で五千円です。</div><div class="ko">이 책은 세 권에 오천 엔입니다.</div></div>
+          <div class="example"><div class="jp">これで最後です。</div><div class="ko">이것으로 마지막입니다.</div></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="usage">
+        <div class="usage-title">④ 원인·이유 (~로, ~때문에)</div>
+        <div class="examples">
+          <div class="example"><div class="jp">事故で怪我をしました。</div><div class="ko">사고로 상처를 입었습니다.</div></div>
+          <div class="example"><div class="jp">渋滞で遅刻しました。</div><div class="ko">정체로 지각했습니다.</div></div>
+        </div>
+      </div>
+      <div class="note">で는 하나의 조사이지만 문맥에 따라 의미가 달라집니다. 앞에 오는 명사가 장소인지, 수단인지, 수량인지 확인하세요.</div>
+    </div>
+  </div>
+
+  <!-- (2) での -->
+  <div class="card" id="g2">
+    <div class="card-header">
+      <span class="card-num">(2)</span>
+      <span class="card-title">〜での</span>
+      <span class="card-ko">~에서의</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">［장소］での＋명사 → 그 장소에서 행해지는 ［동작·상황］</div>
+      <div class="examples">
+        <div class="example"><div class="jp">学校での勉強はどうですか。</div><div class="ko">학교에서의 공부는 어떻습니까?</div></div>
+        <div class="example"><div class="jp">外での授業はどうですか。</div><div class="ko">밖에서의 수업은 어떻습니까?</div></div>
+        <div class="example"><div class="jp">会社での仕事は大変です。</div><div class="ko">회사에서의 일은 힘듭니다.</div></div>
+      </div>
+      <div class="note">で（~에서）뒤에 の를 붙이면 뒤에 오는 명사를 꾸밀 수 있습니다. 「학교에서의 공부」처럼 한국어와 구조가 같으니 비교해 보세요.</div>
+    </div>
+  </div>
+
+  <!-- (3) 目 -->
+  <div class="card" id="g3">
+    <div class="card-header">
+      <span class="card-num">(3)</span>
+      <span class="card-title">〜目</span>
+      <span class="card-ko">접미사 ~째</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">수량사＋目（め） → 순서를 나타내는 ~째</div>
+      <div class="examples">
+        <div class="example"><div class="jp">何年目ですか。／ 三年目です。</div><div class="ko">몇 년째입니까? / 3년째입니다.</div></div>
+        <div class="example"><div class="jp">何人目ですか。／ 一人目です。</div><div class="ko">몇 번째 사람입니까? / 첫 번째입니다.</div></div>
+        <div class="example"><div class="jp">今、ビールは何杯目ですか。</div><div class="ko">지금 맥주 몇 잔째예요?</div></div>
+        <div class="example"><div class="jp">何番目ですか。／ 二番目です。</div><div class="ko">몇 번째입니까? / 두 번째입니다.</div></div>
+      </div>
+      <div class="note">何冊目、何代目、何回目、何日目 등 다양한 조수사와 함께 쓸 수 있습니다.</div>
+    </div>
+  </div>
+
+  <!-- (4) どうですか -->
+  <div class="card" id="g4">
+    <div class="card-header">
+      <span class="card-num">(4)</span>
+      <span class="card-title">どうですか</span>
+      <span class="card-ko">어떻습니까?</span>
+    </div>
+    <div class="card-body">
+      <div class="usage">
+        <div class="usage-title">① 상대방의 의사·의향을 물음</div>
+        <div class="examples">
+          <div class="example"><div class="jp">A：食事はどうしますか。<br>B：ラーメンはどうですか。</div><div class="ko">A: 식사는 어떻게 하시겠습니까?<br>B: 라면은 어떻습니까?</div></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="usage">
+        <div class="usage-title">② 안부 물음</div>
+        <div class="examples">
+          <div class="example"><div class="jp">最近どうですか。</div><div class="ko">요즘 어떻습니까?</div></div>
+        </div>
+      </div>
+      <div class="note">いかがですか는 どうですか의 정중한 표현입니다.</div>
+    </div>
+  </div>
+
+  <!-- (5) よ -->
+  <div class="card" id="g5">
+    <div class="card-header">
+      <span class="card-num">(5)</span>
+      <span class="card-title">〜よ</span>
+      <span class="card-ko">종조사 よ</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">문장 끝에 붙어 정보 전달 / 주장·확신의 뉘앙스</div>
+      <div class="examples">
+        <div class="example"><div class="jp">A：あのう、トイレはどこですか。<br>B：あそこですよ、資料室の隣。</div><div class="ko">A: 저, 화장실은 어디입니까?<br>B: 저쪽이에요, 자료실 옆(이요).</div></div>
+        <div class="example"><div class="jp">きっと彼ですよ、彼。</div><div class="ko">분명 그 사람이에요, 그 사람.</div></div>
+      </div>
+      <div class="note">상대방이 모르는 정보를 전달하거나, 자신의 주장을 확신 있게 말할 때 씁니다. 한국어의 「~이에요」에서 끝을 살짝 강조하는 느낌과 비슷합니다.</div>
+    </div>
+  </div>
+
+  <!-- (6) よね -->
+  <div class="card" id="g6">
+    <div class="card-header">
+      <span class="card-num">(6)</span>
+      <span class="card-title">〜よね</span>
+      <span class="card-ko">그렇죠, 맞죠?</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">よ（주장）＋ ね（동의 구함） → 자신의 주장에 동의를 구하는 표현</div>
+      <div class="examples">
+        <div class="example"><div class="jp">彼が犯人ですよね。</div><div class="ko">그 사람이 범인이지요, 맞죠?</div></div>
+        <div class="example"><div class="jp">食事はまだですよね。</div><div class="ko">식사는 아직이지요, 맞죠?</div></div>
+        <div class="example"><div class="jp">あの建物が学生食堂ですよね。</div><div class="ko">저 건물이 학생식당이지요, 맞죠?</div></div>
+      </div>
+      <div class="note">「내 생각이 맞지요?」라고 확인을 구하는 표현입니다. 혼자 단정짓지 않고 상대방의 동의를 이끌어내는 부드러운 뉘앙스가 있습니다.</div>
+    </div>
+  </div>
+
+  <!-- (7) だったんです -->
+  <div class="card" id="g7">
+    <div class="card-header">
+      <span class="card-num">(7)</span>
+      <span class="card-title">〜だったんです</span>
+      <span class="card-ko">~였던 것입니다</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">명사의 현재 → 과거 변환</div>
+      <table style="width:100%;border-collapse:collapse;font-family:'Noto Serif JP',serif;font-size:0.9rem;margin:4px 0;">
+        <thead>
+          <tr style="background:#e8f0ea;color:#2d5a3d;">
+            <th style="padding:8px 12px;text-align:center;font-weight:700;border:1px solid #d0dcd2;"></th>
+            <th style="padding:8px 12px;text-align:center;font-weight:700;border:1px solid #d0dcd2;">현재</th>
+            <th style="padding:8px 12px;text-align:center;font-weight:700;border:1px solid #d0dcd2;">과거</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:8px 12px;border:1px solid #e0dbd0;color:#888;font-size:0.78rem;font-family:'Noto Sans KR',sans-serif;">정중체</td>
+            <td style="padding:8px 12px;border:1px solid #e0dbd0;text-align:center;">学生<b>です</b></td>
+            <td style="padding:8px 12px;border:1px solid #e0dbd0;text-align:center;color:#c9a84c;">学生<b>でした</b></td>
+          </tr>
+          <tr style="background:#fafaf8;">
+            <td style="padding:8px 12px;border:1px solid #e0dbd0;color:#888;font-size:0.78rem;font-family:'Noto Sans KR',sans-serif;">보통체</td>
+            <td style="padding:8px 12px;border:1px solid #e0dbd0;text-align:center;">学生<b>だ</b></td>
+            <td style="padding:8px 12px;border:1px solid #e0dbd0;text-align:center;color:#c9a84c;">学生<b>だった</b></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="examples">
+        <div class="example"><div class="jp">ここも四年前までは公園でした。</div><div class="ko">여기도 4년 전까지는 공원이었습니다.</div></div>
+        <div class="example"><div class="jp">前の車が事故でした。</div><div class="ko">앞 차가 사고였습니다.</div></div>
+      </div>
+      <div class="divider"></div>
+      <div class="usage">
+        <div class="usage-title">〜んです — 이유·설명을 덧붙이는 표현 (~거든요)</div>
+        <div class="examples">
+          <div class="example"><div class="jp">A：どうして遅刻ですか。<br>B：前の車が事故だったんです。</div><div class="ko">A: 왜 지각입니까?<br>B: 앞 차가 사고였거든요.</div></div>
+          <div class="example"><div class="jp">今日はバスだったんです。</div><div class="ko">오늘은 버스였거든요.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- (8) ですけど -->
+  <div class="card" id="g8">
+    <div class="card-header">
+      <span class="card-num">(8)</span>
+      <span class="card-title">〜ですけど</span>
+      <span class="card-ko">~입니다만</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">けれども → けれど → けど의 준말 / 역접·대비·화제 제시</div>
+      <div class="examples">
+        <div class="example"><div class="jp">わたしは学生ですけど、彼は事務員です。</div><div class="ko">저는 학생입니다만, 그는 사무원입니다.</div></div>
+        <div class="example"><div class="jp">わたしがこの会社の社長ですけど、決定権がありません。</div><div class="ko">제가 이 회사의 사장입니다만, 결정권이 없습니다.</div></div>
+      </div>
+      <div class="note">앞 문장에 단서를 붙이거나 화제를 전환할 때 씁니다. けれども → けれど → けど 순으로 구어체가 됩니다. 문장을 ~ですけど로 끝내면 「~입니다만…」처럼 말을 흐리는 표현도 됩니다.</div>
+    </div>
+  </div>
+
+  <!-- (9) のほう -->
+  <div class="card" id="g9">
+    <div class="card-header">
+      <span class="card-num">(9)</span>
+      <span class="card-title">〜のほう</span>
+      <span class="card-ko">~쪽, ~편</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">명사＋の＋ほう（명사 쪽）</div>
+      <div class="examples">
+        <div class="example"><div class="jp">A：電話のほうはどうですか。<br>B：ずっと不通のままです。</div><div class="ko">A: 전화 쪽은 어떻습니까?<br>B: 계속 불통인 채입니다.</div></div>
+        <div class="example"><div class="jp">社長のほうから連絡はありましたか。</div><div class="ko">사장님 쪽에서 연락은 있었습니까?</div></div>
+        <div class="example"><div class="jp">渋滞のほうはどうでしたか。</div><div class="ko">교통 상황은 어떠셨습니까?</div></div>
+      </div>
+      <div class="note">「渋滞はどうでしたか」라고 직접 말할 수도 있지만, のほう를 붙이면 한국어로 치면 "교통체증은요~?" 처럼 끝을 살짝 올리는 느낌이에요. 직접적으로 묻지 않고 부드럽게 슬쩍 꺼내는 뉘앙스입니다.</div>
+      <div class="culture">일본어는 상대방에게 직접적인 표현을 피하는 경향이 있습니다. のほう는 그 완충재 역할을 하며, 특히 서비스업이나 격식 있는 자리에서 자주 들을 수 있습니다. 예: 「お飲み物のほうはいかがですか。」(음료는 어떻게 하시겠습니까?)</div>
+    </div>
+  </div>
+
+  <!-- (10) 数量+も -->
+  <div class="card" id="g10">
+    <div class="card-header">
+      <span class="card-num">(10)</span>
+      <span class="card-title">数量＋も</span>
+      <span class="card-ko">~이나 (의외로 많음)</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">수량＋も → 「생각보다 많다」는 느낌</div>
+      <div class="examples">
+        <div class="example"><div class="jp">今日で三日間もずっと雨です。</div><div class="ko">오늘로 사흘간이나 계속 비입니다.</div></div>
+        <div class="example"><div class="jp">入試までまだ三週間も時間があります。</div><div class="ko">입시까지 아직 3주일이나 시간이 있습니다.</div></div>
+      </div>
+      <div class="note">뒤에 부정표현이 오면 「전혀」의 의미：<br>教室の中には一人もいません。(교실 안에는 한 명도 없습니다.)</div>
+    </div>
+  </div>
+
+  <!-- (11) 안부 표현 -->
+  <div class="card" id="g11">
+    <div class="card-header">
+      <span class="card-num">(11)</span>
+      <span class="card-title">最近体調はどうですか</span>
+      <span class="card-ko">안부 묻기·답하기</span>
+    </div>
+    <div class="card-body">
+      <div class="usage">
+        <div class="usage-title">안부를 묻는 표현</div>
+        <div class="examples">
+          <div class="example"><div class="jp">最近どうですか。</div><div class="ko">요즘 어떻습니까?</div></div>
+          <div class="example"><div class="jp">お元気ですか。</div><div class="ko">잘 지내십니까?</div></div>
+          <div class="example"><div class="jp">体の具合はどうですか。</div><div class="ko">몸 상태는 어떻습니까?</div></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="usage">
+        <div class="usage-title">답하는 표현</div>
+        <div class="examples">
+          <div class="example"><div class="jp">おかげさまで。</div><div class="ko">덕분에요.</div></div>
+          <div class="example"><div class="jp">あいかわらずです。</div><div class="ko">변함없습니다.</div></div>
+          <div class="example"><div class="jp">元気です。</div><div class="ko">잘 지냅니다.</div></div>
+        </div>
+      </div>
+      <div class="note">おかげさまで는 직역하면 「덕분에」이지만, 실제로는 「잘 지내고 있습니다」의 관용 표현입니다. 누군가의 덕을 인정하는 겸손한 뉘앙스가 담겨 있습니다.</div>
+    </div>
+  </div>
+  <div class="card" id="g12">
+    <div class="card-header">
+      <span class="card-num">(12)</span>
+      <span class="card-title">ここ二三日間</span>
+      <span class="card-ko">요 2·3일간</span>
+    </div>
+    <div class="card-body">
+      <div class="pattern">ここ＋시간 → 요 ~동안 (지금 시점에서 가까운 과거)</div>
+      <div class="examples">
+        <div class="example"><div class="jp">ここ二三日間の勉強で合格は無理ですね。</div><div class="ko">요 두세 시간의 공부로 합격은 무리지요.</div></div>
+        <div class="example"><div class="jp">ここ数日間はずっと雨でした。</div><div class="ko">요 며칠간은 계속 비였습니다.</div></div>
+        <div class="example"><div class="jp">ここ一時間は図書館でした。</div><div class="ko">요 한 시간은 도서관이었습니다.</div></div>
+      </div>
+      <div class="note">ここ는 본래 「여기」라는 장소를 뜻하지만, 시간 표현 앞에 붙으면 「요 ~동안」이라는 뜻이 됩니다. 한국어의 「요 며칠」「요 사흘」과 대응하는 표현입니다.</div>
+    </div>
+  </div>
+
+  <!-- (13) どうも -->
+  <div class="card" id="g13">
+    <div class="card-header">
+      <span class="card-num">(13)</span>
+      <span class="card-title">どうも</span>
+      <span class="card-ko">감사합니다 / 미안합니다</span>
+    </div>
+    <div class="card-body">
+      <div class="usage">
+        <div class="usage-title">① どうもありがとう / どうもすみません의 축약</div>
+      </div>
+      <div class="usage">
+        <div class="usage-title">② 구체적인 의미 없이 가벼운 인사말로 사용</div>
+        <div class="examples">
+          <div class="example"><div class="jp">やあ、どうも。</div><div class="ko">어~, 잘 지내지?</div></div>
+          <div class="example"><div class="jp">先日はどうも。</div><div class="ko">지난번에는 실례 많았어요 / 감사했어요.</div></div>
+        </div>
+      </div>
+      <div class="note">どうも는 뒤에 오는 말을 생략한 형태입니다. 문맥에 따라 감사·사과·인사 등 다양하게 쓰이는데, 말을 길게 늘이지 않고 가볍게 넘길 수 있어 일상에서 매우 자주 등장합니다.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer style="padding: 40px 0 20px;">
+  인하대학교 일본어 · 第５課 문형·문법
+</footer>
+
+</body>
+</html>
