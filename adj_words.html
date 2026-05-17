@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>형용사</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A3550;
+    --teal: #28B4A6;
+    --orange: #E67E22;
+    --white: #ffffff;
+    --paper: #faf6ee;
+    --muted: #8a7e6f;
+    --ink: #2a1a08;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Noto Sans KR', sans-serif; padding: 0 0 40px; }
+  header { width: 100%; text-align: center; padding: 28px 20px 16px; }
+  header .label { font-size: 11px; letter-spacing: 4px; color: var(--teal); font-weight: 700; margin-bottom: 6px; }
+  header h1 { font-size: 22px; font-weight: 900; color: var(--white); font-family: 'Noto Sans JP', sans-serif; letter-spacing: 2px; }
+  .progress-wrap { width: 100%; max-width: 400px; padding: 0 24px; margin-bottom: 20px; display: flex; flex-direction: column; }
+  .progress-text { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width 0.3s ease; }
+  .card-area { width: 100%; max-width: 400px; padding: 0 24px; perspective: 1000px; margin-bottom: 24px; }
+  .card-inner { position: relative; width: 100%; height: 260px; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+  .card-inner.flipped { transform: rotateY(180deg); }
+  .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .card-front { background: var(--white); border-left: 6px solid var(--teal); }
+  .card-back { background: var(--paper); border-left: 6px solid var(--orange); transform: rotateY(180deg); }
+  .front-main { font-family: 'Noto Sans JP', sans-serif; font-size: 52px; font-weight: 900; color: var(--navy); line-height: 1.3; text-align: center; margin-bottom: 8px; }
+  .front-main.small { font-size: 36px; }
+  .front-main.xsmall { font-size: 26px; line-height: 1.6; }
+  .front-cat { font-size: 11px; color: var(--teal); letter-spacing: 3px; font-weight: 700; margin-bottom: 8px; }
+  .front-hint { font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-top: 12px; }
+  .back-kana { font-family: 'Noto Sans JP', sans-serif; font-size: 28px; font-weight: 900; color: var(--teal); margin-bottom: 16px; text-align: center; line-height: 1.4; }
+  .back-meaning { font-size: 22px; font-weight: 700; color: var(--ink); text-align: center; line-height: 1.5; }
+  .back-sub { font-size: 13px; color: var(--muted); text-align: center; margin-top: 10px; line-height: 1.6; }
+  .tap-hint { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 2px; margin-bottom: 20px; }
+  .btn-row { display: flex; gap: 16px; width: 100%; max-width: 400px; padding: 0 24px; }
+  .btn { flex: 1; padding: 16px; border-radius: 16px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.15s; font-family: 'Noto Sans KR', sans-serif; }
+  .btn:active { transform: scale(0.96); }
+  .btn-prev { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.1); }
+  .btn-prev:hover { background: rgba(255,255,255,0.13); }
+  .btn-next { background: var(--teal); color: white; }
+  .btn-next:hover { background: #22a096; }
+  .done-screen { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; text-align: center; }
+  .done-screen.show { display: flex; }
+  .done-emoji { font-size: 56px; margin-bottom: 20px; color: var(--teal); font-weight: 900; font-family: 'Noto Sans JP', sans-serif; }
+  .done-title { font-size: 28px; font-weight: 900; color: var(--white); font-family: 'Noto Sans JP', sans-serif; margin-bottom: 10px; }
+  .done-sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 32px; }
+  .btn-restart { padding: 16px 40px; background: var(--teal); color: white; border: none; border-radius: 16px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="label">日本語練習１</div>
+  <h1>형용사</h1>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-text"><span id="cur">1</span><span id="total"></span></div>
+  <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+</div>
+
+<div class="card-area" id="cardArea">
+  <div class="card-inner" id="cardInner" onclick="flipCard()">
+    <div class="card-front" id="cardFront"></div>
+    <div class="card-back" id="cardBack"></div>
+  </div>
+</div>
+
+<div class="tap-hint" id="tapHint">탭해서 뒤집기</div>
+
+<div class="btn-row">
+  <button class="btn btn-prev" id="btnPrev" onclick="prevCard()">◀ 이전</button>
+  <button class="btn btn-next" id="btnNext" onclick="nextCard()">다음 ▶</button>
+</div>
+
+<div class="done-screen" id="doneScreen">
+  <div class="done-emoji">完</div>
+  <div class="done-title">완료!</div>
+  <div class="done-sub">형용사 완주했어요</div>
+  <button class="btn-restart" onclick="restart()">처음부터 다시</button>
+</div>
+
+<script>
+const words = [
+  // 색깔
+  { cat: '色 색깔', front: { main: '白い', size: '' }, back: { kana: 'しろい', meaning: '희다' } },
+  { cat: '色 색깔', front: { main: '黒い', size: '' }, back: { kana: 'くろい', meaning: '검다' } },
+  { cat: '色 색깔', front: { main: '赤い', size: '' }, back: { kana: 'あかい', meaning: '빨갛다' } },
+  { cat: '色 색깔', front: { main: '青い', size: '' }, back: { kana: 'あおい', meaning: '파랗다' } },
+  { cat: '色 색깔', front: { main: '黄色い', size: '' }, back: { kana: 'きいろい', meaning: '노랗다' } },
+  // 맛
+  { cat: '味 맛', front: { main: 'おいしい', size: '' }, back: { kana: 'おいしい', meaning: '맛있다' } },
+  { cat: '味 맛', front: { main: 'まずい', size: '' }, back: { kana: 'まずい', meaning: '맛없다' } },
+  { cat: '味 맛', front: { main: '甘い', size: '' }, back: { kana: 'あまい', meaning: '달다' } },
+  { cat: '味 맛', front: { main: '辛い', size: '' }, back: { kana: 'からい', meaning: '맵다' } },
+  { cat: '味 맛', front: { main: 'すっぱい', size: '' }, back: { kana: 'すっぱい', meaning: '시다' } },
+  { cat: '味 맛', front: { main: '苦い', size: '' }, back: { kana: 'にがい', meaning: '쓰다' } },
+  { cat: '味 맛', front: { main: 'しょっぱい', size: 'small' }, back: { kana: 'しょっぱい', meaning: '짜다' } },
+  // 온도
+  { cat: '温度 온도', front: { main: '暑い', size: '' }, back: { kana: 'あつい', meaning: '덥다' } },
+  { cat: '温度 온도', front: { main: '寒い', size: '' }, back: { kana: 'さむい', meaning: '춥다' } },
+  { cat: '温度 온도', front: { main: '熱い', size: '' }, back: { kana: 'あつい', meaning: '뜨겁다', sub: '暑い와 발음 같음 주의' } },
+  { cat: '温度 온도', front: { main: '冷たい', size: '' }, back: { kana: 'つめたい', meaning: '차갑다' } },
+  { cat: '温度 온도', front: { main: '暖かい', size: 'small' }, back: { kana: 'あたたかい', meaning: '따뜻하다' } },
+  // 형상·속성
+  { cat: '形状 형상', front: { main: '大きい', size: '' }, back: { kana: 'おおきい', meaning: '크다' } },
+  { cat: '形状 형상', front: { main: '小さい', size: '' }, back: { kana: 'ちいさい', meaning: '작다' } },
+  { cat: '形状 형상', front: { main: '長い', size: '' }, back: { kana: 'ながい', meaning: '길다' } },
+  { cat: '形状 형상', front: { main: '短い', size: '' }, back: { kana: 'みじかい', meaning: '짧다' } },
+  { cat: '形状 형상', front: { main: '重い', size: '' }, back: { kana: 'おもい', meaning: '무겁다' } },
+  { cat: '形状 형상', front: { main: '軽い', size: '' }, back: { kana: 'かるい', meaning: '가볍다' } },
+  { cat: '形状 형상', front: { main: '広い', size: '' }, back: { kana: 'ひろい', meaning: '넓다' } },
+  { cat: '形状 형상', front: { main: '狭い', size: '' }, back: { kana: 'せまい', meaning: '좁다' } },
+  { cat: '形状 형상', front: { main: '高い', size: '' }, back: { kana: 'たかい', meaning: '높다 · 비싸다' } },
+  { cat: '形状 형상', front: { main: '低い', size: '' }, back: { kana: 'ひくい', meaning: '낮다' } },
+  { cat: '形状 형상', front: { main: '安い', size: '' }, back: { kana: 'やすい', meaning: '싸다' } },
+  { cat: '形状 형상', front: { main: '多い', size: '' }, back: { kana: 'おおい', meaning: '많다' } },
+  { cat: '形状 형상', front: { main: '少ない', size: '' }, back: { kana: 'すくない', meaning: '적다' } },
+  { cat: '形状 형상', front: { main: '厚い', size: '' }, back: { kana: 'あつい', meaning: '두껍다', sub: '暑い·熱い와 발음 같음 주의' } },
+  { cat: '形状 형상', front: { main: '薄い', size: '' }, back: { kana: 'うすい', meaning: '얇다' } },
+  { cat: '形状 형상', front: { main: '新しい', size: '' }, back: { kana: 'あたらしい', meaning: '새롭다' } },
+  { cat: '形状 형상', front: { main: '古い', size: '' }, back: { kana: 'ふるい', meaning: '오래되다' } },
+  { cat: '形状 형상', front: { main: '難しい', size: '' }, back: { kana: 'むずかしい', meaning: '어렵다' } },
+  { cat: '形状 형상', front: { main: '易しい', size: '' }, back: { kana: 'やさしい', meaning: '쉽다' } },
+  { cat: '形状 형상', front: { main: '遠い', size: '' }, back: { kana: 'とおい', meaning: '멀다' } },
+  { cat: '形状 형상', front: { main: '近い', size: '' }, back: { kana: 'ちかい', meaning: '가깝다' } },
+  { cat: '形状 형상', front: { main: '強い', size: '' }, back: { kana: 'つよい', meaning: '강하다' } },
+  { cat: '形状 형상', front: { main: '弱い', size: '' }, back: { kana: 'よわい', meaning: '약하다' } },
+  { cat: '形状 형상', front: { main: '面白い', size: '' }, back: { kana: 'おもしろい', meaning: '재미있다' } },
+  { cat: '形状 형상', front: { main: 'つまらない', size: 'small' }, back: { kana: 'つまらない', meaning: '재미없다' } },
+  { cat: '形状 형상', front: { main: 'いい／よい', size: 'small' }, back: { kana: 'いい／よい', meaning: '좋다' } },
+  { cat: '形状 형상', front: { main: '悪い', size: '' }, back: { kana: 'わるい', meaning: '나쁘다' } },
+  { cat: '形状 형상', front: { main: '美しい', size: '' }, back: { kana: 'うつくしい', meaning: '아름답다' } },
+  // 감정
+  { cat: '感情 감정', front: { main: '楽しい', size: '' }, back: { kana: 'たのしい', meaning: '즐겁다' } },
+  { cat: '感情 감정', front: { main: '悲しい', size: '' }, back: { kana: 'かなしい', meaning: '슬프다' } },
+  { cat: '感情 감정', front: { main: '嬉しい', size: '' }, back: { kana: 'うれしい', meaning: '기쁘다' } },
+  { cat: '感情 감정', front: { main: '寂しい', size: '' }, back: { kana: 'さびしい', meaning: '외롭다' } },
+  { cat: '感情 감정', front: { main: '辛い', size: '' }, back: { kana: 'つらい', meaning: '힘들다', sub: '辛い(からい 맵다)와 한자 같음 주의' } },
+  { cat: '感情 감정', front: { main: '怖い', size: '' }, back: { kana: 'こわい', meaning: '무섭다' } },
+  { cat: '感情 감정', front: { main: '痛い', size: '' }, back: { kana: 'いたい', meaning: '아프다' } },
+  { cat: '感情 감정', front: { main: 'うるさい', size: '' }, back: { kana: 'うるさい', meaning: '시끄럽다' } },
+  { cat: '感情 감정', front: { main: '悔しい', size: '' }, back: { kana: 'くやしい', meaning: '분하다, 억울하다' } },
+];
+
+let current = 0;
+let flipped = false;
+
+function render() {
+  const w = words[current];
+  const front = document.getElementById('cardFront');
+  const back = document.getElementById('cardBack');
+  const txt = w.front.main.replace(/<[^>]*>/g, ''); const sizeClass = txt.length <= 5 ? '' : txt.length <= 9 ? 'small' : 'xsmall';
+  front.innerHTML = `
+    <div class="front-cat">${w.cat}</div>
+    <div class="front-main ${sizeClass}">${w.front.main}</div>
+    <div class="front-hint">탭해서 의미 확인</div>
+  `;
+  back.innerHTML = `
+    <div class="back-kana">${w.back.kana}</div>
+    <div class="back-meaning">${w.back.meaning}</div>
+    ${w.back.sub ? `<div class="back-sub">${w.back.sub}</div>` : ''}
+  `;
+  document.getElementById('cur').textContent = current + 1;
+  document.getElementById('total').textContent = `/ ${words.length}`;
+  document.getElementById('fill').style.width = `${((current + 1) / words.length) * 100}%`;
+  document.getElementById('btnPrev').disabled = current === 0;
+  document.getElementById('btnNext').textContent = current === words.length - 1 ? '완료' : '다음 ▶';
+  if (flipped) { flipped = false; document.getElementById('cardInner').classList.remove('flipped'); }
+}
+
+function flipCard() { flipped = !flipped; document.getElementById('cardInner').classList.toggle('flipped'); }
+function nextCard() {
+  if (current < words.length - 1) { current++; render(); }
+  else {
+    document.getElementById('cardArea').style.display = 'none';
+    document.getElementById('tapHint').style.display = 'none';
+    document.querySelector('.btn-row').style.display = 'none';
+    document.querySelector('.progress-wrap').style.display = 'none';
+    document.getElementById('doneScreen').classList.add('show');
+  }
+}
+function prevCard() { if (current > 0) { current--; render(); } }
+function restart() {
+  current = 0; flipped = false;
+  document.getElementById('cardArea').style.display = 'block';
+  document.getElementById('tapHint').style.display = 'flex';
+  document.querySelector('.btn-row').style.display = 'flex';
+  document.querySelector('.progress-wrap').style.display = 'flex';
+  document.getElementById('doneScreen').classList.remove('show');
+  render();
+}
+
+let touchStartX = 0;
+document.getElementById('cardArea').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+document.getElementById('cardArea').addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) { if (dx < 0) nextCard(); else prevCard(); }
+}, { passive: true });
+
+render();
+</script>
+</body>
+</html>
