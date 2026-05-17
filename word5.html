@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5과 단어</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A3550;
+    --teal: #28B4A6;
+    --orange: #E67E22;
+    --white: #ffffff;
+    --paper: #faf6ee;
+    --light: #eee8d8;
+    --muted: #8a7e6f;
+    --ink: #2a1a08;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 0 0 40px;
+  }
+  header {
+    width: 100%;
+    text-align: center;
+    padding: 28px 20px 16px;
+  }
+  header .label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  header h1 {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--white);
+    font-family: 'Noto Sans JP', sans-serif;
+    letter-spacing: 2px;
+  }
+  .progress-wrap {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 24px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+  }
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width 0.3s ease; }
+  .card-area {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 24px;
+    perspective: 1000px;
+    margin-bottom: 24px;
+  }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .card-inner.flipped { transform: rotateY(180deg); }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .card-front { background: var(--white); border-left: 6px solid var(--teal); }
+  .card-back { background: var(--paper); border-left: 6px solid var(--orange); transform: rotateY(180deg); }
+  .front-main {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1.3;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .front-main.small { font-size: 36px; }
+  .front-main.xsmall { font-size: 26px; line-height: 1.6; }
+  .front-hint { font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-top: 12px; }
+  .back-kana {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--teal);
+    margin-bottom: 16px;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .back-meaning { font-size: 22px; font-weight: 700; color: var(--ink); text-align: center; line-height: 1.5; }
+  .back-sub { font-size: 13px; color: var(--muted); text-align: center; margin-top: 10px; line-height: 1.6; }
+  .tap-hint { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 2px; margin-bottom: 20px; }
+  .btn-row { display: flex; gap: 16px; width: 100%; max-width: 400px; padding: 0 24px; }
+  .btn {
+    flex: 1;
+    padding: 16px;
+    border-radius: 16px;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-prev { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.1); }
+  .btn-prev:hover { background: rgba(255,255,255,0.13); }
+  .btn-next { background: var(--teal); color: white; }
+  .btn-next:hover { background: #22a096; }
+  .done-screen { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; text-align: center; }
+  .done-screen.show { display: flex; }
+  .done-emoji { font-size: 56px; margin-bottom: 20px; color: var(--teal); font-weight: 900; font-family: 'Noto Sans JP', sans-serif; }
+  .done-title { font-size: 28px; font-weight: 900; color: var(--white); font-family: 'Noto Sans JP', sans-serif; margin-bottom: 10px; }
+  .done-sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 32px; }
+  .btn-restart { padding: 16px 40px; background: var(--teal); color: white; border: none; border-radius: 16px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="label">日本語練習１</div>
+  <h1>5과 단어</h1>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-text">
+    <span id="cur">1</span><span id="total"></span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+</div>
+
+<div class="card-area" id="cardArea">
+  <div class="card-inner" id="cardInner" onclick="flipCard()">
+    <div class="card-front" id="cardFront"></div>
+    <div class="card-back" id="cardBack"></div>
+  </div>
+</div>
+
+<div class="tap-hint" id="tapHint">탭해서 뒤집기</div>
+
+<div class="btn-row">
+  <button class="btn btn-prev" id="btnPrev" onclick="prevCard()">◀ 이전</button>
+  <button class="btn btn-next" id="btnNext" onclick="nextCard()">다음 ▶</button>
+</div>
+
+<div class="done-screen" id="doneScreen">
+  <div class="done-emoji">完</div>
+  <div class="done-title">완료!</div>
+  <div class="done-sub">5과 단어 완주했어요</div>
+  <button class="btn-restart" onclick="restart()">처음부터 다시</button>
+</div>
+
+<script>
+const words = [
+  { type: 'normal', front: { main: '〜で', size: '' }, back: { kana: '〜で', meaning: '〜에서 (장소) / 〜로 (시간)' } },
+  { type: 'normal', front: { main: '何年目', size: 'small' }, back: { kana: 'なんねんめ', meaning: '몇 년째' } },
+  { type: 'normal', front: { main: '今年', size: '' }, back: { kana: 'ことし', meaning: '올해' } },
+  { type: 'normal', front: { main: 'ちょうど', size: '' }, back: { kana: 'ちょうど', meaning: '딱, 정확히' } },
+  { type: 'normal', front: { main: '三年目', size: 'small' }, back: { kana: 'さんねんめ', meaning: '삼년째' } },
+  { type: 'normal', front: { main: '生活', size: '' }, back: { kana: 'せいかつ', meaning: '생활' } },
+  { type: 'normal', front: { main: 'どうですか', size: 'small' }, back: { kana: 'どうですか', meaning: '어떻습니까?' } },
+  { type: 'normal', front: { main: '大変', size: '' }, back: { kana: 'たいへん', meaning: '큰일, 힘들다', sub: '기본형: 大変だ (형용동사)' } },
+  { type: 'normal', front: { main: 'どうして', size: '' }, back: { kana: 'どうして', meaning: '왜 (=なぜ)' } },
+  { type: 'normal', front: { main: 'なかなか', size: '' }, back: { kana: 'なかなか', meaning: '꽤, 좀처럼', sub: 'なかなか + 부정 → 좀처럼 ~않다' } },
+  { type: 'normal', front: { main: 'そうですよね', size: 'xsmall' }, back: { kana: 'そうですよね', meaning: '그렇지요', sub: 'そうです + よ + ね' } },
+  { type: 'normal', front: { main: '学生時代', size: 'small' }, back: { kana: 'がくせいじだい', meaning: '학생시절', sub: '時節(じせつ)는 불가' } },
+  { type: 'normal', front: { main: '四年間', size: '' }, back: { kana: 'よねんかん', meaning: '4년간' } },
+  { type: 'normal', front: { main: 'ずっと', size: '' }, back: { kana: 'ずっと', meaning: '줄곧, 계속' } },
+  { type: 'normal', front: { main: '〜でした', size: '' }, back: { kana: '〜でした', meaning: '〜였습니다', sub: 'です의 과거형' } },
+  { type: 'normal', front: { main: 'それで？', size: '' }, back: { kana: 'それで', meaning: '그래서(요)? 그런데 왜요?', sub: '본디 접속사' } },
+  { type: 'normal', front: { main: 'あした', size: '' }, back: { kana: 'あした', meaning: '내일', sub: '明日' } },
+  { type: 'normal', front: { main: 'ご都合', size: '' }, back: { kana: 'ごつごう', meaning: '형편, 사정, 시간', sub: 'ご: 존경 접두사' } },
+  { type: 'normal', front: { main: '休みの日', size: 'small' }, back: { kana: 'やすみのひ', meaning: '휴일', sub: '休日(きゅうじつ)' } },
+  { type: 'normal', front: { main: '〜ですけど', size: 'small' }, back: { kana: '〜ですけど', meaning: '〜입니다만', sub: 'けれども, けれど, けど' } },
+  { type: 'normal', front: { main: 'いや', size: '' }, back: { kana: 'いや', meaning: '아니, 아뇨', sub: '=いいえ; 남성어' } },
+  { type: 'normal', front: { main: '別に', size: '' }, back: { kana: 'べつに', meaning: '그냥, 별로', sub: '별다른 것이 없음' } },
+  { type: 'normal', front: { main: '渋滞', size: '' }, back: { kana: 'じゅうたい', meaning: '(교통) 정체' } },
+  { type: 'normal', front: { main: '〜ほう', size: '' }, back: { kana: '〜ほう', meaning: '〜쪽, 〜편', sub: '方 / 완충·비교 표현' } },
+  { type: 'normal', front: { main: '一時間も', size: 'small' }, back: { kana: 'いちじかんも', meaning: '한 시간이나', sub: '숫자 + も = 생각보다 많음' } },
+  { type: 'normal', front: { main: 'そのまま', size: '' }, back: { kana: 'そのまま', meaning: '그대로' } },
+  { type: 'normal', front: { main: 'なぜ', size: '' }, back: { kana: 'なぜ', meaning: '왜 (=どうして)' } },
+  { type: 'normal', front: { main: '前', size: '' }, back: { kana: 'まえ', meaning: '앞', sub: '↔ 後ろ(うしろ)' } },
+  { type: 'normal', front: { main: '車', size: '' }, back: { kana: 'くるま', meaning: '자동차' } },
+  { type: 'normal', front: { main: '事故', size: '' }, back: { kana: 'じこ', meaning: '사고' } },
+  { type: 'normal', front: { main: '結局', size: '' }, back: { kana: 'けっきょく', meaning: '결국' } },
+  { type: 'normal', front: { main: '遅刻', size: '' }, back: { kana: 'ちこく', meaning: '지각' } },
+  { type: 'normal', front: { main: '最近', size: '' }, back: { kana: 'さいきん', meaning: '최근' } },
+  { type: 'normal', front: { main: '体調', size: '' }, back: { kana: 'たいちょう', meaning: '건강, 몸의 상태, 컨디션' } },
+  { type: 'normal', front: { main: 'ここ二三日間', size: 'xsmall' }, back: { kana: 'ここにさんにちかん', meaning: '요 2·3일 간' } },
+  { type: 'normal', front: { main: '風邪', size: '' }, back: { kana: 'かぜ', meaning: '감기' } },
+  { type: 'normal', front: { main: 'お気の毒に', size: 'xsmall' }, back: { kana: 'おきのどくに', meaning: '안됐군요', sub: '고정표현' } },
+  { type: 'normal', front: { main: 'お大事に', size: 'small' }, back: { kana: 'おだいじに', meaning: '(몸) 조심하세요, 병문안시', sub: '고정표현' } },
+  { type: 'normal', front: { main: 'どうも', size: '' }, back: { kana: 'どうも', meaning: '감사합니다, 미안합니다', sub: '문맥에 따라 달라짐' } },
+];
+
+let current = 0;
+let flipped = false;
+
+function render() {
+  const w = words[current];
+  const front = document.getElementById('cardFront');
+  const back = document.getElementById('cardBack');
+  const txt = w.front.main.replace(/<[^>]*>/g, ''); const sizeClass = txt.length <= 5 ? '' : txt.length <= 9 ? 'small' : 'xsmall';
+  front.innerHTML = `
+    <div class="front-main ${sizeClass}">${w.front.main}</div>
+    <div class="front-hint">탭해서 의미 확인</div>
+  `;
+  back.innerHTML = `
+    <div class="back-kana">${w.back.kana}</div>
+    <div class="back-meaning">${w.back.meaning}</div>
+    ${w.back.sub ? `<div class="back-sub">${w.back.sub}</div>` : ''}
+  `;
+  document.getElementById('cur').textContent = current + 1;
+  document.getElementById('total').textContent = `/ ${words.length}`;
+  document.getElementById('fill').style.width = `${((current + 1) / words.length) * 100}%`;
+  document.getElementById('btnPrev').disabled = current === 0;
+  document.getElementById('btnNext').textContent = current === words.length - 1 ? '완료' : '다음 ▶';
+  if (flipped) { flipped = false; document.getElementById('cardInner').classList.remove('flipped'); }
+}
+
+function flipCard() { flipped = !flipped; document.getElementById('cardInner').classList.toggle('flipped'); }
+
+function nextCard() {
+  if (current < words.length - 1) { current++; render(); }
+  else {
+    document.getElementById('cardArea').style.display = 'none';
+    document.getElementById('tapHint').style.display = 'none';
+    document.querySelector('.btn-row').style.display = 'none';
+    document.querySelector('.progress-wrap').style.display = 'none';
+    document.getElementById('doneScreen').classList.add('show');
+  }
+}
+
+function prevCard() { if (current > 0) { current--; render(); } }
+
+function restart() {
+  current = 0; flipped = false;
+  document.getElementById('cardArea').style.display = 'block';
+  document.getElementById('tapHint').style.display = 'flex';
+  document.querySelector('.btn-row').style.display = 'flex';
+  document.querySelector('.progress-wrap').style.display = 'flex';
+  document.getElementById('doneScreen').classList.remove('show');
+  render();
+}
+
+let touchStartX = 0;
+document.getElementById('cardArea').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+document.getElementById('cardArea').addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) { if (dx < 0) nextCard(); else prevCard(); }
+}, { passive: true });
+
+render();
+</script>
+</body>
+</html>
